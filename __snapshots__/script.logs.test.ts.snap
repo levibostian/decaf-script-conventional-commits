@@ -1,0 +1,51 @@
+export const snapshot = {};
+
+snapshot[`console logs: commit with very long title 1`] = `
+"feat: this is an extremely long commit message tit... => indicates a minor release.
+"
+`;
+
+snapshot[`console logs: multiple commits with different types 1`] = `
+"feat: add new authentication system => indicates a minor release.
+fix: resolve null pointer exception in parser => indicates a patch release.
+docs: update README with new examples => does not indicate a release.
+chore: update dependencies to latest versions => does not indicate a release.
+"
+`;
+
+snapshot[`console logs: breaking change with scope 1`] = `
+"feat(api)!: redesign authentication API to use OAu... => indicates a major release.
+"
+`;
+
+snapshot[`console logs: pre-release version bump 1`] = `
+"feat: add user profile management => indicates a minor release.
+fix: resolve login redirect issue => indicates a patch release.
+"
+`;
+
+snapshot[`console logs: transition to stable with breaking change 1`] = `
+"feat!: production-ready API with backwards-incompa... => indicates a major release.
+"
+`;
+
+snapshot[`console logs: no release-worthy commits 1`] = `
+"docs: fix typo in installation guide => does not indicate a release.
+chore: update CI configuration => does not indicate a release.
+refactor: simplify internal helper functions => does not indicate a release.
+No commits indicate a release should be made. Exiting without a new release version.
+"
+`;
+
+snapshot[`console logs: first release of project 1`] = `
+"No last release found, returning first release version.
+"
+`;
+
+snapshot[`console logs: complex mix with priority 1`] = `
+"feat: add dark mode support => indicates a minor release.
+fix: correct timezone handling => indicates a patch release.
+feat!: remove deprecated v2 API endpoints => indicates a major release.
+docs: add migration guide => does not indicate a release.
+"
+`;
