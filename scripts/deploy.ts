@@ -93,4 +93,13 @@ if (didAlreadyDeployToNpm) {
   await $`npm ${argsToPushToNpm}`.printCommand()
 }
 
-
+// ---------------------------------------------------------------------------------
+// Create a GitHub release
+// ---------------------------------------------------------------------------------
+await $`deno ${[
+  `run`,
+  `--allow-all`,
+  `--quiet`,
+  `jsr:@levibostian/decaf-script-github-releases`,
+  `set`
+]}`.printCommand()

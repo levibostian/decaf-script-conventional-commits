@@ -34,4 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           get_latest_release_current_branch: deno run --allow-all --quiet jsr:@levibostian/decaf-script-github-releases get
           get_next_release_version: ./script.ts 
-          deploy: ./scripts/deploy.ts && deno run --allow-all --quiet jsr:@levibostian/decaf-script-github-releases set
+          deploy: ./scripts/deploy.ts
