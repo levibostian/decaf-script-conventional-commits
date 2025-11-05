@@ -189,13 +189,33 @@ Deno.test("console logs: no release-worthy commits", async (t) => {
   await assertSnapshot(t, logs)
 })
 
+Deno.test("console logs: no commits since last release", async (t) => {
+  const logs = await runScriptWithLogs({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    lastRelease: {
+      versionName: "1.5.0",
+      commitSha: "abc123"
+    },
+    gitCommitsSinceLastRelease: []
+  })
+  
+  await assertSnapshot(t, logs)
+})
+
 Deno.test("console logs: first release of project", async (t) => {
   const logs = await runScriptWithLogs({
     gitCurrentBranch: "main",
     gitRepoOwner: "test-owner",
     gitRepoName: "test-repo",
     testMode: false,
-    gitCommitsSinceLastRelease: []
+    gitCommitsSinceLastRelease: [{
+      sha: "commit1",
+      title: "feat: initial feature",
+      date: "2024-01-01T00:00:00Z"
+    }]
   })
   
   await assertSnapshot(t, logs)
