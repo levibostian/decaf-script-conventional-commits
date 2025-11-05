@@ -1,51 +1,100 @@
 export const snapshot = {};
 
 snapshot[`console logs: commit with very long title 1`] = `
-"feat: this is an extremely long commit message tit... => indicates a minor release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat: this is an extremely long commit message ... => indicates a minor release.
+
+Based on your commits, the next version will be 1.1.0.
 "
 `;
 
 snapshot[`console logs: multiple commits with different types 1`] = `
-"feat: add new authentication system => indicates a minor release.
-fix: resolve null pointer exception in parser => indicates a patch release.
-docs: update README with new examples => does not indicate a release.
-chore: update dependencies to latest versions => does not indicate a release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat: add new authentication system                => indicates a minor release.
+fix: resolve null pointer exception in parser      => indicates a patch release.
+docs: update README with new examples              => does not indicate a release.
+chore: update dependencies to latest versions      => does not indicate a release.
+
+Based on your commits, the next version will be 1.3.0.
 "
 `;
 
 snapshot[`console logs: breaking change with scope 1`] = `
-"feat(api)!: redesign authentication API to use OAu... => indicates a major release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat(api)!: redesign authentication API to use ... => indicates a major release.
+
+Based on your commits, the next version will be 3.0.0.
 "
 `;
 
 snapshot[`console logs: pre-release version bump 1`] = `
-"feat: add user profile management => indicates a minor release.
-fix: resolve login redirect issue => indicates a patch release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat: add user profile management                  => indicates a minor release.
+fix: resolve login redirect issue                  => indicates a patch release.
+
+Based on your commits, the next version will be 0.4.0.
 "
 `;
 
 snapshot[`console logs: transition to stable with breaking change 1`] = `
-"feat!: production-ready API with backwards-incompa... => indicates a major release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat!: production-ready API with backwards-inco... => indicates a major release.
+
+Based on your commits, the next version will be 1.0.0.
 "
 `;
 
 snapshot[`console logs: no release-worthy commits 1`] = `
-"docs: fix typo in installation guide => does not indicate a release.
-chore: update CI configuration => does not indicate a release.
-refactor: simplify internal helper functions => does not indicate a release.
-No commits indicate a release should be made. Exiting without a new release version.
+\`I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+docs: fix typo in installation guide               => does not indicate a release.
+chore: update CI configuration                     => does not indicate a release.
+refactor: simplify internal helper functions       => does not indicate a release.
+
+None of these commits are important enough to trigger a release. I only look for commits that begin with:
+1. "feat:" - indicates a new or modified feature
+2. "fix:" - indicating a bug fix
+3. "feat!:" (the ! character before colon) - indicating a breaking change
+No new version will be released.
+\`
+`;
+
+snapshot[`console logs: no commits since last release 1`] = `
+"No commits since the last release. There are no commits to analyze and no new version will be released. Exiting...
 "
 `;
 
 snapshot[`console logs: first release of project 1`] = `
-"No last release found, returning first release version.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat: initial feature                              => indicates a minor release.
+
+This looks like your first release! There wasn't a previous release found.
+Going to set the next release version to 0.1.0 because it's the first release.
 "
 `;
 
 snapshot[`console logs: complex mix with priority 1`] = `
-"feat: add dark mode support => indicates a minor release.
-fix: correct timezone handling => indicates a patch release.
-feat!: remove deprecated v2 API endpoints => indicates a major release.
-docs: add migration guide => does not indicate a release.
+"I'm going to look at each commit and figure out if any of them are important enough to trigger a new release.
+Commits must be formatted according to the Conventional Commits specification: https://www.conventionalcommits.org/
+
+feat: add dark mode support                        => indicates a minor release.
+fix: correct timezone handling                     => indicates a patch release.
+feat!: remove deprecated v2 API endpoints          => indicates a major release.
+docs: add migration guide                          => does not indicate a release.
+
+Based on your commits, the next version will be 4.0.0.
 "
 `;

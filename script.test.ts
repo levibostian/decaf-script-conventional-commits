@@ -32,13 +32,55 @@ async function runScript(dataFilePath: string) {
   }
 }
 
-Deno.test("returns first release version when no last release exists", async () => {
+Deno.test("exits early when no commits since last release", async () => {
+  const tempFile = setupTestEnv({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    lastRelease: {
+      versionName: "1.2.3",
+      commitSha: "abc123"
+    },
+    gitCommitsSinceLastRelease: []
+  })
+
+  const result = await runScript(tempFile)
+
+  const output = getOutputFromFile(tempFile)
+  assertEquals(output.version, undefined)
+  assertEquals(result.exitCode, 0)
+  assertEquals(result.stdout.includes("No commits since the last release"), true)
+})
+
+Deno.test("first release: no release-worthy commits does not set version", async () => {
   const tempFile = setupTestEnv({
     gitCurrentBranch: "main",
     gitRepoOwner: "test-owner",
     gitRepoName: "test-repo",
     testMode: false,
     gitCommitsSinceLastRelease: []
+  })
+
+  await runScript(tempFile)
+
+  const output = getOutputFromFile(tempFile)
+  assertEquals(output.version, undefined)
+})
+
+Deno.test("first release: sets 0.1.0 only when qualifying commits exist", async () => {
+  const tempFile = setupTestEnv({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    gitCommitsSinceLastRelease: [
+      {
+        sha: "abc001",
+        title: "feat: initial feature",
+        date: "2024-01-01T00:00:00Z"
+      }
+    ]
   })
 
   await runScript(tempFile)
