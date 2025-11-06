@@ -1,6 +1,6 @@
 {
   "name": "@levibostian/decaf-script-conventional-commits",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "A lightweight NPM wrapper for decaf-script-conventional-commits binary",
   "type": "module",
   "publishConfig": {
