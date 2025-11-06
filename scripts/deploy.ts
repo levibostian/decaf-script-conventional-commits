@@ -5,38 +5,15 @@ import { getDeployStepInput } from "@levibostian/decaf-sdk"
 
 const input = getDeployStepInput()
 
-const githubReleaseAssets: string[] = []
-
-const compileBinary = async ({ denoTarget, outputFileName }: { denoTarget: string; outputFileName: string }) => {
-  // Create dist directory if it doesn't exist
-  await $`mkdir -p dist`.printCommand()
-  await $`OUTPUT_FILE_NAME=dist/${outputFileName} DENO_TARGET=${denoTarget} deno task compile`.printCommand()
-
-  githubReleaseAssets.push(`dist/${outputFileName}#${outputFileName}`)
-}
-
-// --------------------------------------------------------------------------------
-// Compile binaries for different platforms
-// --------------------------------------------------------------------------------
-await compileBinary({
-  denoTarget: "x86_64-unknown-linux-gnu",
-  outputFileName: "bin-x86_64-Linux",
-})
-
-await compileBinary({
-  denoTarget: "aarch64-unknown-linux-gnu",
-  outputFileName: "bin-aarch64-Linux",
-})
-
-await compileBinary({
-  denoTarget: "x86_64-apple-darwin",
-  outputFileName: "bin-x86_64-Darwin",
-})
-
-await compileBinary({
-  denoTarget: "aarch64-apple-darwin",
-  outputFileName: "bin-aarch64-Darwin",
-})
+// ---------------------------------------------------------------------------------
+// Compile the deno binary for all targets and prepare GitHub release assets
+// ---------------------------------------------------------------------------------
+// Create dist directory if it doesn't exist
+await $`mkdir -p dist`.printCommand()
+await $`deno compile --output dist/bin-x86_64-Linux --allow-env --allow-net --allow-run --allow-read --allow-write --target x86_64-unknown-linux-gnu script.ts`.printCommand()
+await $`deno compile --output dist/bin-aarch64-Linux --allow-env --allow-net --allow-run --allow-read --allow-write --target aarch64-unknown-linux-gnu script.ts`.printCommand()
+await $`deno compile --output dist/bin-x86_64-Darwin --allow-env --allow-net --allow-run --allow-read --allow-write --target x86_64-apple-darwin script.ts`.printCommand()
+await $`deno compile --output dist/bin-aarch64-Darwin --allow-env --allow-net --allow-run --allow-read --allow-write --target aarch64-apple-darwin script.ts`.printCommand()
 
 await $`deno ${[
   `run`,
@@ -44,7 +21,12 @@ await $`deno ${[
   `--allow-all`,
   `jsr:@levibostian/decaf-script-github-releases`,
   `set-github-release-assets`,
-  ...githubReleaseAssets
+  ...[
+    `dist/bin-x86_64-Linux#bin-x86_64-Linux`,
+    `dist/bin-aarch64-Linux#bin-aarch64-Linux`,
+    `dist/bin-x86_64-Darwin#bin-x86_64-Darwin`,
+    `dist/bin-aarch64-Darwin#bin-aarch64-Darwin`
+  ]
 ]}`.printCommand()
 
 // ---------------------------------------------------------------------------------
