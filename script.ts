@@ -66,11 +66,31 @@ if (versionBumpsForEachCommit.length === 0) {
 // Exit early if there is no previous release. this is the first release.
 const lastReleaseVersion = input.lastRelease?.versionName
 if (!lastReleaseVersion) {
-  console.log("This looks like your first release! There wasn't a previous release found.")
-  console.log("Going to set the next release version to 0.1.0 because it's the first release.")
+  console.log(
+    "This looks like your first release! There wasn't a previous release found.",
+  )
+
+  // Determine the first version based on the bump type
+  let firstVersion: string
+  if (nextReleaseBump === "major") {
+    firstVersion = "1.0.0"
+    console.log(
+      "Going to set the next release version to 1.0.0 because the commits indicate a major release.",
+    )
+  } else if (nextReleaseBump === "minor") {
+    firstVersion = "0.1.0"
+    console.log(
+      "Going to set the next release version to 0.1.0 because the commits indicate a minor release.",
+    )
+  } else {
+    firstVersion = "0.0.1"
+    console.log(
+      "Going to set the next release version to 0.0.1 because the commits indicate a patch release.",
+    )
+  }
 
   setNextReleaseVersionStepOutput({
-    version: "0.1.0"
+    version: firstVersion,
   })
   Deno.exit(0)
 }

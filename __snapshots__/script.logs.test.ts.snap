@@ -82,7 +82,7 @@ Commits must be formatted according to the Conventional Commits specification: h
 feat: initial feature                              => indicates a minor release.
 
 This looks like your first release! There wasn't a previous release found.
-Going to set the next release version to 0.1.0 because it's the first release.
+Going to set the next release version to 0.1.0 because the commits indicate a minor release.
 "
 `;
 

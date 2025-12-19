@@ -89,6 +89,79 @@ Deno.test("first release: sets 0.1.0 only when qualifying commits exist", async 
   assertEquals(output.version, "0.1.0")
 })
 
+Deno.test("first release: sets 0.0.1 for fix (patch) commits", async () => {
+  const tempFile = setupTestEnv({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    gitCommitsSinceLastRelease: [
+      {
+        sha: "abc001",
+        title: "fix: initial bug fix",
+        date: "2024-01-01T00:00:00Z",
+      },
+    ],
+  })
+
+  await runScript(tempFile)
+
+  const output = getOutputFromFile(tempFile)
+  assertEquals(output.version, "0.0.1")
+})
+
+Deno.test("first release: sets 1.0.0 for breaking change (major) commits", async () => {
+  const tempFile = setupTestEnv({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    gitCommitsSinceLastRelease: [
+      {
+        sha: "abc001",
+        title: "feat!: initial breaking change",
+        date: "2024-01-01T00:00:00Z",
+      },
+    ],
+  })
+
+  await runScript(tempFile)
+
+  const output = getOutputFromFile(tempFile)
+  assertEquals(output.version, "1.0.0")
+})
+
+Deno.test("first release: prioritizes major over minor and patch", async () => {
+  const tempFile = setupTestEnv({
+    gitCurrentBranch: "main",
+    gitRepoOwner: "test-owner",
+    gitRepoName: "test-repo",
+    testMode: false,
+    gitCommitsSinceLastRelease: [
+      {
+        sha: "abc001",
+        title: "fix: bug fix",
+        date: "2024-01-01T00:00:00Z",
+      },
+      {
+        sha: "abc002",
+        title: "feat: new feature",
+        date: "2024-01-02T00:00:00Z",
+      },
+      {
+        sha: "abc003",
+        title: "feat!: breaking change",
+        date: "2024-01-03T00:00:00Z",
+      },
+    ],
+  })
+
+  await runScript(tempFile)
+
+  const output = getOutputFromFile(tempFile)
+  assertEquals(output.version, "1.0.0")
+})
+
 Deno.test("bumps patch version for fix commits", async () => {
   const tempFile = setupTestEnv({
     gitCurrentBranch: "main",
