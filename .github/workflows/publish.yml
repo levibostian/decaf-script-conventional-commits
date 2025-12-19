@@ -26,7 +26,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm install -g npm@latest # required to get the latest OIDC support
       
-      - uses: levibostian/decaf@0.3.2
+      - uses: levibostian/decaf@0.9.0
         env:
           # required to use 'gh' CLI in my step scripts. 
           GH_TOKEN: ${{ github.token }}      
@@ -34,4 +34,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           get_latest_release_current_branch: deno run --allow-all --quiet jsr:@levibostian/decaf-script-github-releases get
           get_next_release_version: ./script.ts 
-          deploy: ./scripts/deploy.ts
+          deploy: |
+            ./scripts/deploy.ts
+            deno run --allow-all --quiet jsr:@levibostian/decaf-script-jsr 
+            deno run --allow-all --quiet jsr:@levibostian/decaf-script-npm --package-path ./node
+            deno run --allow-all --quiet jsr:@levibostian/decaf-script-github-releases set 
