@@ -34,6 +34,6 @@ jobs:
           get_next_release_version: ./script.ts 
           deploy: |
             ./scripts/deploy.ts
-            deno run --allow-all --quiet jsr:@levibostian/decaf-script-jsr 
+            deno run --allow-all --quiet jsr:@levibostian/decaf-script-jsr --allow-dirty
             deno run --allow-all --quiet jsr:@levibostian/decaf-script-npm --package-path ./node
             deno run --allow-all --quiet jsr:@levibostian/decaf-script-github-releases set 
