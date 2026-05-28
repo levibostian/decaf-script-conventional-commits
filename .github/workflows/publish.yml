@@ -21,7 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}      
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          get_latest_release_current_branch: decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.0 get
+          get_latest_release_current_branch: decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.1 get
           get_next_release_version: deno task run
           deploy: |
             deno compile --output decaf-script-conventional-commits-x64-linux --target x86_64-unknown-linux-gnu script.ts
@@ -32,10 +32,10 @@ jobs:
             chmod +x install.sh
             sed -i "s/PUT_VERSION_HERE/{{nextVersionName}}/" install.sh
             cat install.sh | grep VERSION
-            decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.0 set-github-release-assets \
+            decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.1 set-github-release-assets \
               decaf-script-conventional-commits-x64-linux \
               decaf-script-conventional-commits-arm64-linux \
               decaf-script-conventional-commits-x64-macos \
               decaf-script-conventional-commits-arm64-macos \
               install.sh
-            decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.0 set
+            decaf shebang https://github.com/levibostian/decaf-script-github-releases.git/shebang.sh@1.2.1 set
