@@ -15,7 +15,7 @@ jobs:
 
       - uses: jdx/mise-action@v4
       
-      - uses: levibostian/decaf@0.17.0
+      - uses: levibostian/decaf@0.17.1
         env:
           # required to use 'gh' CLI in my step scripts. 
           GH_TOKEN: ${{ github.token }}      
