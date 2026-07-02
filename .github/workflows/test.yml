@@ -6,10 +6,9 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
-    - name: Set up Deno
-      uses: asdf-vm/actions/install@v4
+    - uses: jdx/mise-action@v4
 
     - name: Install dependencies
       run: deno install --frozen

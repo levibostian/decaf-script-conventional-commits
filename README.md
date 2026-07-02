@@ -2,8 +2,6 @@
 
 A script specifically designed for the [decaf](https://github.com/levibostian/decaf) deployment automation tool. This script automatically determines your next semantic version by parsing commit messages using the [conventional commits](https://www.conventionalcommits.org) specification.
 
-**Important**: This is exclusively for use with decaf. You must use decaf to utilize this script - it's not a standalone tool for general use.
-
 ## What does this script do?
 
 This is a decaf script to get the next release version based on conventional commits. If your commit messages follow the conventional commits specification, this script will analyze your commit history since the last release and determine the appropriate semantic version bump (major, minor, or patch) based on the types of commits made.
@@ -12,47 +10,24 @@ This is a decaf script to get the next release version based on conventional com
 
 # Getting Started
 
-**No installation required!** We just need to tell decaf how to run this script (via `npx`, `deno`, or a compiled binary).
-
-Here are some simple examples for how to run this script with decaf on GitHub Actions or from the command line.
+Run using decaf's `shebang` command in your deployment workflow.
 
 **GitHub Actions Example**
 
 ```yaml
 - uses: levibostian/decaf
   with:
-    get_next_release_version: npx @levibostian/decaf-script-conventional-commits
+    get_next_release_version: decaf shebang git@github.com:levibostian/decaf-script-conventional-commits.git/shebang.sh@<version-here>
     # Other decaf arguments...
 ```
+
+Replace `<version-here>` with a [release](https://github.com/levibostian/decaf-script-conventional-commits/releases). Latest: ![GitHub Release](https://img.shields.io/github/v/release/levibostian/decaf-script-conventional-commits)
 
 **Command Line Example**
 
 ```bash
 decaf \
-  --get-next-release-version "npx @levibostian/decaf-script-conventional-commits"
-```
-
-> Note: The above examples use `npx` and are arguably the easiest way to run the script. See below for alternative installation methods.
-
-### Alternative Installation Methods
-
-The above examples use `npx` and are arguably the easiest way to run the script. But, you have a few other options too: 
-
-1. **Run with Deno** (requires Deno installed)
-
-```yaml
-get_next_release_version: deno run --allow-all --quiet jsr:@levibostian/decaf-script-conventional-commits
-```
-
-2. **Run as a compiled binary**
-
-Great option that doesn't depend on node or deno. This just installs a binary from GitHub and runs it for your operating system.
-
-```yaml
-get_next_release_version: curl -fsSL https://github.com/levibostian/decaf-script-conventional-commits/blob/HEAD/install?raw=true | bash -s "0.1.0" && ./decaf-script-conventional-commits
-
-# Or, always run the latest version (less stable, but always up-to-date)
-get_next_release_version: curl -fsSL https://github.com/levibostian/decaf-script-conventional-commits/blob/HEAD/install?raw=true | bash && ./decaf-script-conventional-commits
+  --get-next-release-version "decaf shebang git@github.com:levibostian/decaf-script-conventional-commits.git/shebang.sh@<version-here>"
 ```
 
 # Commit message format
